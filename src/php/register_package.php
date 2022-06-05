@@ -83,7 +83,8 @@ HTML;;
 <nav class="navbar navbar-expand-lg bg-light sticky-top w-100">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="../assets/logo.png" height="64"> <!--source: freepik.com-->
+            <!--suppress CheckImageSize -->
+            <img src="../assets/logo.png" height="64" alt="64"> <!--source: freepik.com-->
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -137,7 +138,7 @@ HTML;;
                 <!-- Package Card -->
                 <div class="card m-3 w-75 mx-auto" id="package_details">
                     <div class="card-header">
-                        <h4>Package</h4> <!--TODO add background image-->
+                        <h4>Package</h4>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
