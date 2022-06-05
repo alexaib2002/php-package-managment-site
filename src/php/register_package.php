@@ -1,39 +1,27 @@
 <?php
 
-function generateActorCard(string $role): string {
-    try {
-        if ($role === "sender") {
-            $card_title = "Sender";
-        } else if ($role === "receiver") {
-            $card_title = "Receiver";
-        } else {
-            throw new \http\Exception\InvalidArgumentException("Unknown role: $role");
-        }
-    } catch (\http\Exception\InvalidArgumentException $e) {
-        error_log("Invalid argument: " . $e->getMessage());
-    }
-    assert(isset($card_title));
+function generateActorCard(string $form_id, string $title): string {
     return <<<HTML
 <div class="card-header"> <!--TODO add background image-->
-    <h4>$card_title</h4>
+    <h4>$title</h4>
 </div>
 <ul class="list-group list-group-flush">
     <li class="list-group-item">
         <div class="row g-2">
             <div class="col form-floating">
-                <input type="text" aria-label="First name" class="form-control" value="" id="input".$card_title."FirstName">
-                <label for="input".$card_title."FirstName">First name</label>
+                <input type="text" aria-label="First name" class="form-control" value="" id="input" .$form_id."FirstName">
+                <label for="input" .$form_id."FirstName">First name</label>
             </div>
             <div class="col form-floating">
-                <input type="text" aria-label="Last name" class="form-control" value="" id="input".$card_title."LastName">
-                <label for="input".$card_title."LastName">Last name</label>
+                <input type="text" aria-label="Last name" class="form-control" value="" id="input" .$form_id."LastName">
+                <label for="input" .$form_id."LastName">Last name</label>
             </div>
         </div>
-        <div class="input-group m-1">
-            <input type="text" aria-label="E-Mail username" class="form-control" placeholder="$card_title's mail username" id="input".$card_title."EmailUser">
+        <div class="input-group my-2">
+            <input type="text" aria-label="E-Mail username" class="form-control" placeholder="$form_id's mail username" id="input" .$form_id."EmailUser">
             <span class="input-group-text">@</span>
-            <input type="text" aria-label="E-Mail domain" class="form-control" placeholder="$card_title's email domain" id="input".$card_title."EmailDomain">
-            <select id="input".$card_title."EmailDomainExtension" class="form-select">
+            <input type="text" aria-label="E-Mail domain" class="form-control" placeholder="$form_id's email domain" id="input" .$form_id."EmailDomain">
+            <select class="form-select" id="input" .$form_id."EmailDomainExtension">
                 <option value="com">.com</option>
                 <option value="es">.es</option>
                 <option value="net">.net</option>
@@ -43,11 +31,24 @@ function generateActorCard(string $role): string {
                 <option value="int">.int</option>
             </select>
         </div>
-        <div class="form-floating my-2 mx-1 w-50">
-            <input type="tel" class="form-control" id="inputSenderPhone" value="">
-            <label for="inputSenderPhone">Phone number</label>
+        <div class="row my-2 g-2">
+            <div class="col form-floating">
+                <select class="form-floating form-select" id="input" .$form_id."PhoneExtension">
+                    <option value="+34">+34 (Spain)</option>
+                    <option value="+1">+1 (USA)</option>
+                    <option value="+44">+44 (UK)</option>
+                    <option value="+49">+49 (Germany)</option>
+                    <option value="+33">+33 (France)</option>
+                    <option value="+39">+39 (Italy)</option>
+                    <option value="+41">+41 (Switzerland)</option>
+                </select>
+                <label class="mx-2" for="input" .$form_id."PhoneExtension">Number extension:</label>
+            </div>
+            <div class="col form-floating">
+                <input type="tel" class="form-control" id="input" .$form_id."PhoneNumber" value="">
+                <label class="mx-2" for="input" .$form_id."PhoneNumber">Phone number</label>
+            </div>
         </div>
-
     </li>
     <li class="list-group-item">
         <div class="input-group">
@@ -64,7 +65,7 @@ function generateActorCard(string $role): string {
         </div>
     </li>
 </ul>
-HTML;;
+HTML;
 }
 
 ?>
@@ -129,11 +130,11 @@ HTML;;
             <form>
                 <!-- Sender Card -->
                 <div class="card m-3 w-75 mx-auto" id="sender_details">
-                    <?php echo generateActorCard("sender"); ?>
+                    <?php echo generateActorCard("Sender", "Who's sending the package?"); ?>
                 </div>
                 <!-- Receiver Card -->
                 <div class="card m-3 w-75 mx-auto" id="receiver_details">
-                    <?php echo generateActorCard("receiver"); ?>
+                    <?php echo generateActorCard("receiver", "Where do we deliver the package?"); ?>
                 </div>
                 <!-- Package Card -->
                 <div class="card m-3 w-75 mx-auto" id="package_details">
