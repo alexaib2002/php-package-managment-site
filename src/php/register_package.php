@@ -17,18 +17,21 @@ function generateActorCard(string $form_id, string $title): string {
     <li class="list-group-item">
         <div class="row g-2">
             <div class="col form-floating">
-                <input type="text" aria-label="First name" class="form-control" value="" id="input$form_id.FirstName" name="input$form_id.FirstName">
+                <input type="text" aria-label="First name" class="form-control" value="" id="input$form_id.FirstName" name="input$form_id.FirstName" required>
                 <label for="input$form_id.FirstName">First name</label>
+                <div class="valid-tooltip">
+                    Looks good!
+                </div>
             </div>
             <div class="col form-floating">
-                <input type="text" aria-label="Last name" class="form-control" value="" id="input$form_id.LastName">
+                <input type="text" aria-label="Last name" class="form-control" value="" id="input$form_id.LastName" name="input$form_id.FirstName" required>
                 <label for="input$form_id.LastName">Last name</label>
             </div>
         </div>
         <div class="input-group my-2">
-            <input type="text" aria-label="E-Mail username" class="form-control" placeholder="$form_id's mail username" id="input$form_id.EmailUser">
+            <input type="text" aria-label="E-Mail username" class="form-control" placeholder="$form_id's mail username" id="input$form_id.EmailUser" name="input$form_id.EmailUser" required>
             <span class="input-group-text">@</span>
-            <input type="text" aria-label="E-Mail domain" class="form-control" placeholder="$form_id's email domain" id="input$form_id.EmailDomain">
+            <input type="text" aria-label="E-Mail domain" class="form-control" placeholder="$form_id's email domain" id="input$form_id.EmailDomain" name="input$form_id.EmailDomain" required>
             <select class="form-select" id="input$form_id.EmailDomainExtension">
                 <option value="com">.com</option>
                 <option value="es">.es</option>
@@ -41,7 +44,7 @@ function generateActorCard(string $form_id, string $title): string {
         </div>
         <div class="row my-2 g-2">
             <div class="col form-floating">
-                <select class="form-floating form-select" id="input$form_id.PhoneExtension">
+                <select class="form-floating form-select" id="input$form_id.PhoneExtension" name="input$form_id.EmailDomain" required>
                     <option value="+34">+34 (Spain)</option>
                     <option value="+1">+1 (USA)</option>
                     <option value="+44">+44 (UK)</option>
@@ -53,7 +56,7 @@ function generateActorCard(string $form_id, string $title): string {
                 <label class="mx-2" for="input$form_id.PhoneExtension">Number extension:</label>
             </div>
             <div class="col form-floating">
-                <input type="tel" class="form-control" id="input$form_id.PhoneNumber" value="">
+                <input type="tel" class="form-control" id="input$form_id.PhoneNumber" value="" name="input$form_id.PhoneNumber" required>
                 <label class="mx-2" for="input$form_id.PhoneNumber">Phone number</label>
             </div>
         </div>
@@ -61,10 +64,10 @@ function generateActorCard(string $form_id, string $title): string {
     <li class="list-group-item">
         <div class="input-group">
             <span class="input-group-text">Address</span>
-            <input type="text" class="form-control" placeholder="Street" name="input$form_id.Address.Street" id="input$form_id.Address.Street">
-            <input type="text" class="form-control" placeholder="City" name="input$form_id.Address.City" id="input$form_id.Address.City">
-            <input type="text" class="form-control" placeholder="State" name="input$form_id.Address.State" id="input$form_id.Address.State">
-            <input type="text" class="form-control" placeholder="Zip" name="input$form_id.Address.Zip" id="input$form_id.Address.Zip">
+            <input type="text" class="form-control" placeholder="Street" id="input$form_id.Address.Street" name="input$form_id.Address.Street" required>
+            <input type="text" class="form-control" placeholder="City" id="input$form_id.Address.City" name="input$form_id.Address.City" required>
+            <input type="text" class="form-control" placeholder="State" id="input$form_id.Address.State" name="input$form_id.Address.State" required>
+            <input type="text" class="form-control" placeholder="Zip" id="input$form_id.Address.Zip" name="input$form_id.Address.Zip" required>
         </div>
     </li>
     <li class="list-group-item">
@@ -93,6 +96,7 @@ HTML;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/form_submitter_validator.js"></script>
 </head>
 <body>
 
@@ -109,7 +113,9 @@ if (!$display_form) {
             <h1>Register new delivery</h1>
             <p>Please, complete the form below to add a new package to the system</p>
             <hr>
-            <form action="register_package.php" method="post" >
+            <!--needs-validation is just a pseudo-class, its not defined, its only there for js to know which forms 
+            need validation-->
+            <form action="register_package.php" method="post" class="needs-validation" novalidate>
                 <!-- Sender Card -->
                 <div class="card m-3 w-75 mx-auto" id="sender_details">
                     $sender_card
@@ -128,16 +134,16 @@ if (!$display_form) {
                             <div class="row">
                                 <div class="input-group col m-1 w-50">
                                     <span class="input-group-text w-25">Weight</span>
-                                    <input type="text" aria-label="Weight" class="form-control" placeholder="0" id="inputWeight" name="inputWeight">
-                                    <select id="inputWeightUnit" class="form-select" name="inputWeightUnit">
+                                    <input type="text" aria-label="Weight" class="form-control" placeholder="0" id="inputWeight" name="inputWeight" required>
+                                    <select id="inputWeightUnit" class="form-select" name="inputWeightUnit" required>
                                         <option value="kg">kg</option>
                                         <option value="lb">lb</option>
                                     </select>
                                 </div>
                                 <div class="input-group col m-1 w-50">
                                     <span class="input-group-text w-25">Length</span>
-                                    <input type="text" aria-label="Length" class="form-control" placeholder="0" id="inputLength" name="inputLength">
-                                    <select id="inputLengthUnit" class="form-select" name="inputLengthUnit">
+                                    <input type="text" aria-label="Length" class="form-control" placeholder="0" id="inputLength" name="inputLength" required>
+                                    <select id="inputLengthUnit" class="form-select" name="inputLengthUnit" required>
                                         <option value="cm">cm</option>
                                         <option value="in">in</option>
                                     </select>
@@ -146,16 +152,16 @@ if (!$display_form) {
                             <div class="row">
                                 <div class="input-group col m-1 w-25">
                                     <span class="input-group-text w-25">Width</span>
-                                    <input type="text" aria-label="Width" class="form-control" placeholder="Width" id="inputWidth" name="inputWidth">
-                                    <select id="inputWidthUnit" class="form-select" name="inputWidthUnit">
+                                    <input type="text" aria-label="Width" class="form-control" placeholder="Width" id="inputWidth" name="inputWidth" required>
+                                    <select id="inputWidthUnit" class="form-select" name="inputWidthUnit" required>
                                         <option value="cm">cm</option>
                                         <option value="in">in</option>
                                     </select>
                                 </div>
                                 <div class="input-group col m-1 w-25">
                                     <span class="input-group-text w-25">Height</span>
-                                    <input type="text" aria-label="Height" class="form-control" placeholder="Height" id="inputHeight" name="inputHeight">
-                                    <select id="inputHeightUnit" class="form-select" name="inputHeightUnit">
+                                    <input type="text" aria-label="Height" class="form-control" placeholder="Height" id="inputHeight" name="inputHeight" required>
+                                    <select id="inputHeightUnit" class="form-select" name="inputHeightUnit" required>
                                         <option value="cm">cm</option>
                                         <option value="in">in</option>
                                     </select>
@@ -167,15 +173,15 @@ if (!$display_form) {
                                 <legend class="col-form-label col-sm-2 pt-0">Delivery type</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="deliveryTypeRadios" id="standardRadio" value="standard" checked>
+                                        <input class="form-check-input" type="radio" name="deliveryTypeRadios" id="standardRadio" value="standard" checked required>
                                         <label class="form-check-label" for="standardRadio">Standard</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="deliveryTypeRadios" id="expressRadio" value="express">
+                                        <input class="form-check-input" type="radio" name="deliveryTypeRadios" id="expressRadio" value="express" required>
                                         <label class="form-check-label" for="expressRadio">Express</label>
                                     </div>
                                     <div class="form-check disabled">
-                                        <input class="form-check-input" type="radio" name="deliveryTypeRadios" id="overnightRadio" value="overnight">
+                                        <input class="form-check-input" type="radio" name="deliveryTypeRadios" id="overnightRadio" value="overnight" required>
                                         <label class="form-check-label" for="overnightRadio">Overnight</label>
                                     </div>
                                 </div>
@@ -186,6 +192,7 @@ if (!$display_form) {
                 <!-- Submit Button -->
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary m-3">Register new deliver</button>
+                    <button type="reset" class="btn btn-danger">Reset form</button>
                 </div>
             </form>
         </div>
@@ -199,5 +206,11 @@ HTML;
 }
 ?>
 </body>
+<footer>
+    <!--form validator needs to be placed here, so it can be executed after PHP has finished HTML composing-->
+    <script type="text/javascript">
+        addValidationListeners();
+    </script>
+</footer>
 </html>
 
