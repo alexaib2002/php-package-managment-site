@@ -10,7 +10,7 @@ such as Docker for deploying the webserver and a SQLite database for storing the
 
 ## Goals of the project
 
-![Extracted from this webpage](https://www.geeksforgeeks.org/top-10-php-projects-ideas-for-beginners/)
+[Extracted from this webpage](https://www.geeksforgeeks.org/top-10-php-projects-ideas-for-beginners/)
 
 Every organization needs a transport management system for its employees. This enables a smooth flow in managing the pickup and drop facilities. 
 This project will start with the employee self-registration portal and all the saved credentials will be looped inside the central portal. 
