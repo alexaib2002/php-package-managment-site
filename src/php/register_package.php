@@ -1,8 +1,12 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    // TODO notify user
-}
+require_once 'persistent_elements.php';
+/**
+ *  @var string $top_navbar
+ */
+
+
+$display_form = $_SERVER['REQUEST_METHOD'] === "POST";
 
 function generateActorCard(string $form_id, string $title): string {
     return <<<HTML
@@ -92,46 +96,13 @@ HTML;
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg bg-light sticky-top w-100">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <!--suppress CheckImageSize -->
-            <img src="../assets/logo.png" height="64" alt="64"> <!--source: freepik.com-->
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-nav-scroll">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
-    </div>
-</nav>
+<?php
 
+if (!$display_form) {
+    $sender_card = generateActorCard("Sender", "Who's sending the package?");
+    $receiver_card = generateActorCard("Receiver", "Who's receiving the package?");
+    echo $top_navbar;
+    echo <<<HTML
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-8 text-left">
@@ -141,11 +112,11 @@ HTML;
             <form action="register_package.php" method="post" >
                 <!-- Sender Card -->
                 <div class="card m-3 w-75 mx-auto" id="sender_details">
-                    <?php echo generateActorCard("Sender", "Who's sending the package?"); ?>
+                    $sender_card
                 </div>
                 <!-- Receiver Card -->
                 <div class="card m-3 w-75 mx-auto" id="receiver_details">
-                    <?php echo generateActorCard("Receiver", "Where do we deliver the package?"); ?>
+                    $receiver_card
                 </div>
                 <!-- Package Card -->
                 <div class="card m-3 w-75 mx-auto" id="package_details">
@@ -220,6 +191,13 @@ HTML;
         </div>
     </div>
 </div>
+HTML;
+
+} else {
+    echo "Now POST is set up";
+    // TODO notify user
+}
+?>
 </body>
 </html>
 
