@@ -8,6 +8,14 @@ Its goal is to test the language features of PHP using an SQL database and makin
 powered by Bootstrap, while providing an example of its usage in a real world application, using technologies
 such as Docker for deploying the webserver and a SQLite database for storing the registers.
 
+## Running the project
+
+The project makes use of Bootstrap. Before executing the project on a Docker container,
+put Bootstrap JS and CSS on their respective folders on src:
+    
+- /src/css/bootstrap*
+- /src/js/bootstrap*
+
 ## Goals of the project
 
 [Extracted from this webpage](https://www.geeksforgeeks.org/top-10-php-projects-ideas-for-beginners/)
